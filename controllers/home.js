@@ -8,3 +8,9 @@ exports.index = function(req, res) {
     title: 'Home'
   });
 };
+
+exports.getEula = function(req, res) {
+  res.render('eula', {
+    title: 'Eula'
+  });
+};
