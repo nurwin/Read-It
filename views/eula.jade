@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	h1 Eula Examples
+	p.lead
+	hr
+	.row
+		.col-sm-12
+			p Here is a new concept that we created so that users want to read the fine prints (ex. The EULA, TOS, etc.). We make reading the fine prints more interesting and interactive.
+			br
+			a.btn.btn-default(href='#myModal', role='button', data-toggle='modal', onclick='playEula()') Try it
+			#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							input.close(type='button', data-dismiss='modal', aria-hidden='true', value='X')
+							h3#myModalLabel EULA
+						.modal-body
+							span.element
+						.modal-footer
+							input.btn(type='button', data-dismiss='modal', aria-hidden='true', value='Close')
+	#eula(style="display:none")
