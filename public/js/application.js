@@ -14,5 +14,7 @@
  */
 
 //= require lib/jquery-2.1.1.min
+//= require lib/typed
+//= require lib/google-tts.min.js
 //= require lib/bootstrap.min
 //= require main
