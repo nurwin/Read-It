@@ -21,7 +21,7 @@ function playAudio(i){
 		
     var delay ;
     if (firstTime){
-      delay = 2500;
+      delay = 500;
       firstTime = false;
     }else{
       delay = 0;

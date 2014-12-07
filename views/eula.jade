@@ -11,20 +11,24 @@ block content
 			a#btnResume.btn.btn-default(href='#', role='button', rel='noreferrer', style="display:none") Resume
 	hr
 	.row
-		.col-sm-12(style='text-align:center;')
-			p#lastUpdate
-	.row
-		.col-sm-12(style='text-align:center;')
-			h3#title
+		.col-sm-13(style="overflow-y: show; height: 360px; width: 100%;")
+			.row
+				.col-sm-1
+				.col-sm-11(style='text-align:left;')
+					p#lastUpdate.text-muted Date of Last Revision: November 15, 2013.
+			.row
+				.col-sm-12(style='text-align:center;')
+					h2#title Statement of Rights and Responsibilities
+					br
+			.row
+				.col-sm-1
+				.col-sm-10
+					div#renderArea 
+						
+				.col-sm-1
+			#eula(style="display:none")
 			br
-	.row
-		.col-sm-1
-		.col-sm-10
-			p#renderArea
-		.col-sm-1
-	#eula(style="display:none")
-	br
-	br
-	br
-	br
-	#test
+			br
+			br
+			br
+			#test

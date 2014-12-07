@@ -18,8 +18,8 @@ $(document).ready(function() {
 	$("#eula").load("eula-encode.xml", function(){
 		eula = $.parseXML($("#eula").html());
 		debugger;
-		$("#lastUpdate").text($(eula).find("lastupdate").text());
-		$("#title").text($(eula).find("title").text());
+		//$("#lastUpdate").text($(eula).find("lastupdate").text());
+		//$("#title").text($(eula).find("title").text());
 		eulaStr = decodeURIComponent($(eula).find("page").first().text().trim());
 	});
 	
@@ -50,7 +50,7 @@ $(document).ready(function() {
 		  
 			  // play
 			  $("#btnPlay").click(function() {
-				googleTTS.play($(eulaStr).text(), "en", function(err) {
+				googleTTS.play(eulaStr, "en", function(err) {
 				
 				  if (err) {
 					$("#error").text(err.toString());
