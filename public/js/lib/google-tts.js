@@ -4,6 +4,50 @@ var isPlaying = false;
 var i = 0;
 
 var audios = [];
+var firstTime = true;
+
+
+  
+function playAudio(i){
+	console.log("i: " + i + ", audios: " +  audios.length);
+	if (i < audios.length){
+		console.log("playing");
+		
+		var delay ;
+		if (firstTime){
+			delay = 600;
+			firstTime = false;
+		}else{
+			delay = 0;
+		}
+		
+		var txt = kacrut.shift();
+		$(renderArea).append("<span id='element" + i + "'></span>");
+		$('#element' + i).typed({
+			strings: [txt],
+			typeSpeed: 10,
+			contentType: 'html',
+			showCursor: false,
+			startDelay: delay //ms,
+		});
+		
+		audios[i].play();
+	}else{
+		console.log("not playing");
+	}
+}
+  
+function pauseAudio(){
+	debugger;
+	if (audios.length>0 && audios != undefined)
+		audios[i].pause();
+}
+  
+function resumeAudio(){
+	debugger;
+	if (audios.length>0 && audios != undefined)
+		audios[i].resume();
+}
 
 /*! google-tts v1.0.0 | https://github.com/hiddentao/google-tts */
 (function (name, definition){
@@ -280,16 +324,6 @@ var audios = [];
 					a.play();
 				}*/
 			  //draw text
-			  console.log("get more");
-			  var txt = kacrut.shift();
-				$(renderArea).append("<span id='element" + urls.length + "'></span>");
-				$('#element' + urls.length).typed({
-					strings: [txt],
-					typeSpeed: 0,
-					contentType: 'html',
-					showCursor: false,
-					startDelay: 500 //ms,
-				});
 			
 				player.play(urls.shift(), _playFn);
 			
@@ -334,6 +368,7 @@ var audios = [];
      */
     self.toString = function() { throw new Error('Not yet implemented'); };
   };
+
   /**
    * Playback using HTML5 Audio.
    * @constructor
@@ -398,18 +433,25 @@ var audios = [];
         audio.src = url;
 		
         audio.addEventListener('ended', function() {
-			isPlaying = false;
-			console.log("req: "+url+" ENDED status="+isPlaying);
+			playAudio(i);
+			i++;
+        });
+        audio.addEventListener('play', function() {
         });
         audio.addEventListener('canplay', function() {
-			isPlaying = true;
-			console.log("req: "+url+" canplay status="+isPlaying);
+			console.log("loading another audio...");
 			cb();
         });
 		//console.log("asep: " + i);
 		//i++;
-        audio.play();
-		//audios.push(audio);
+        //audio.play();
+		audios.push(audio);
+		
+		debugger;
+		if (i==0){
+			playAudio(i);
+			i++;
+		}
 		/*$("#frame").attr("src",url);
 		$("#frame").on("load", function(){
 			debugger;

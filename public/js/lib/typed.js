@@ -82,6 +82,9 @@
         // for stopping
         this.stop = false;
 
+        // for pausing
+        this.pause = false;
+
         // custom cursor
         this.cursorChar = this.options.cursorChar;
 
@@ -117,109 +120,123 @@
         // pass current string state to each function, types 1 char per call
         ,
         typewrite: function(curString, curStrPos) {
-            // exit when stopped
-            if (this.stop === true) {
-                return;
-            }
+		
+			if (!this.pause){
+		
+				// exit when stopped
+				if (this.stop === true) {
+					return;
+				}
 
-            // varying values for setTimeout during typing
-            // can't be global since number changes each time loop is executed
-            var humanize = Math.round(Math.random() * (100 - 30)) + this.typeSpeed;
-            var self = this;
+				// varying values for setTimeout during typing
+				// can't be global since number changes each time loop is executed
+				var humanize = Math.round(Math.random() * (100 - 30)) + this.typeSpeed;
+				var self = this;
 
-            // ------------- optional ------------- //
-            // backpaces a certain string faster
-            // ------------------------------------ //
-            // if (self.arrayPos == 1){
-            //  self.backDelay = 50;
-            // }
-            // else{ self.backDelay = 500; }
+				// ------------- optional ------------- //
+				// backpaces a certain string faster
+				// ------------------------------------ //
+				// if (self.arrayPos == 1){
+				//  self.backDelay = 50;
+				// }
+				// else{ self.backDelay = 500; }
 
-            // contain typing function in a timeout humanize'd delay
-            self.timeout = setTimeout(function() {
-                // check for an escape character before a pause value
-                // format: \^\d+ .. eg: ^1000 .. should be able to print the ^ too using ^^
-                // single ^ are removed from string
-                var charPause = 0;
-                var substr = curString.substr(curStrPos);
-                if (substr.charAt(0) === '^') {
-                    var skip = 1; // skip atleast 1
-                    if (/^\^\d+/.test(substr)) {
-                        substr = /\d+/.exec(substr)[0];
-                        skip += substr.length;
-                        charPause = parseInt(substr);
-                    }
+				// contain typing function in a timeout humanize'd delay
+				self.timeout = setTimeout(function() {
+					// check for an escape character before a pause value
+					// format: \^\d+ .. eg: ^1000 .. should be able to print the ^ too using ^^
+					// single ^ are removed from string
+					var charPause = 0;
+					var substr = curString.substr(curStrPos);
+					if (substr.charAt(0) === '^') {
+						var skip = 1; // skip atleast 1
+						if (/^\^\d+/.test(substr)) {
+							substr = /\d+/.exec(substr)[0];
+							skip += substr.length;
+							charPause = parseInt(substr);
+						}
 
-                    // strip out the escape character and pause value so they're not printed
-                    curString = curString.substring(0, curStrPos) + curString.substring(curStrPos + skip);
-                }
+						// strip out the escape character and pause value so they're not printed
+						curString = curString.substring(0, curStrPos) + curString.substring(curStrPos + skip);
+					}
 
-                if (self.contentType === 'html') {
-                    // skip over html tags while typing
-                    if (curString.substr(curStrPos).charAt(0) === '<') {
-                        var tag = '';
-                        while (curString.substr(curStrPos).charAt(0) !== '>') {
-                            tag += curString.substr(curStrPos).charAt(0);
-                            curStrPos++;
-                        }
-                        curStrPos++;
-                        tag += '>';
-                    }
-                }
+					if (self.contentType === 'html') {
+						// skip over html tags while typing
+						if (curString.substr(curStrPos).charAt(0) === '<') {
+							var tag = '';
+							while (curString.substr(curStrPos).charAt(0) !== '>') {
+								tag += curString.substr(curStrPos).charAt(0);
+								curStrPos++;
+							}
+							curStrPos++;
+							tag += '>';
+						}
+					}
 
-                // timeout for any pause after a character
-                self.timeout = setTimeout(function() {
-                    if (curStrPos === curString.length) {
-                        // fires callback function
-                        self.options.onStringTyped(self.arrayPos);
+					// timeout for any pause after a character
+					self.timeout = setTimeout(function() {
+						if (curStrPos === curString.length) {
+							// fires callback function
+							self.options.onStringTyped(self.arrayPos);
 
-                        // is this the final string
-                        if (self.arrayPos === self.strings.length - 1) {
-                            // animation that occurs on the last typed string
-                            self.options.callback();
+							// is this the final string
+							if (self.arrayPos === self.strings.length - 1) {
+								// animation that occurs on the last typed string
+								self.options.callback();
 
-                            self.curLoop++;
+								self.curLoop++;
 
-                            // quit if we wont loop back
-                            if (self.loop === false || self.curLoop === self.loopCount)
-                                return;
-                        }
+								// quit if we wont loop back
+								if (self.loop === false || self.curLoop === self.loopCount)
+									return;
+							}
 
-                        self.timeout = setTimeout(function() {
-                            self.backspace(curString, curStrPos);
-                        }, self.backDelay);
-                    } else {
+							self.timeout = setTimeout(function() {
+								self.backspace(curString, curStrPos);
+							}, self.backDelay);
+						} else {
 
-                        /* call before functions if applicable */
-                        if (curStrPos === 0)
-                            self.options.preStringTyped(self.arrayPos);
+							/* call before functions if applicable */
+							if (curStrPos === 0)
+								self.options.preStringTyped(self.arrayPos);
 
-                        // start typing each new char into existing string
-                        // curString: arg, self.el.html: original text inside element
-                        var nextString = self.elContent + curString.substr(0, curStrPos + 1);
-                        if (self.attr) {
-                            self.el.attr(self.attr, nextString);
-                        } else {
-                            if (self.contentType === 'html') {
-                                self.el.html(nextString);
-                            } else {
-                                self.el.text(nextString);
-                            }
-                        }
+							// start typing each new char into existing string
+							// curString: arg, self.el.html: original text inside element
+							var nextString = self.elContent + curString.substr(0, curStrPos + 1);
+							if (self.attr) {
+								self.el.attr(self.attr, nextString);
+							} else {
+								if (self.contentType === 'html') {
+									self.el.html(nextString);
+								} else {
+									self.el.text(nextString);
+								}
+							}
 
-                        // add characters one by one
-                        curStrPos++;
-                        // loop the function
-                        self.typewrite(curString, curStrPos);
-                    }
-                    // end of character pause
-                }, charPause);
+							// add characters one by one
+							curStrPos++;
+							// loop the function
+							self.typewrite(curString, curStrPos);
+						}
+						// end of character pause
+					}, charPause);
 
-                // humanized value for typing
-            }, humanize);
+					// humanized value for typing
+				}, humanize);
+			}else{
+				// loop the function
+				self.typewrite(curString, curStrPos);
+			}
 
         }
-
+		,
+		pause: function(){
+			this.pause = true;
+		}
+		,
+		play: function(){
+			this.pause = false;
+		}
         ,
         backspace: function(curString, curStrPos) {
             // exit when stopped
