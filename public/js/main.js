@@ -6,8 +6,13 @@ var renderArea = "#renderArea";
 var remainSentences;
 var typingArea;
 var focus = false;
+var testTyper;
 
 $(document).ready(function() {	
+	testTyper = $('#test');
+
+    // testTyper.typer(['<a class="h1">Anyone</a> <br/><a class="h2">is</a> <a class="a">awesome!</a>']);
+
 	$("#eula").load("eula.txt", function(){
 		eulaStr = $("#eula").html();
 		eulaArr = eulaStr.split(":break:");
@@ -87,12 +92,12 @@ function iAgree(){
 function pauseEula(){
 	if (i > 0){
 		audios[i-1].pause();
-		$("#element" + (i-1)).pause();
+		// $("#element" + (i-1)).pause();
 	}
 }
 
 function resumeEula(){
 	audios[i-1].play();
-	$("#element" + (i-1)).play();
+	// $("#element" + (i-1)).play();
 }
 

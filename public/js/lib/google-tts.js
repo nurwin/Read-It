@@ -1,4 +1,5 @@
 var kacrut = [];
+var kacruthtml = [];
 var queue = [];
 var isPlaying = false;
 var i = 0;
@@ -6,6 +7,9 @@ var i = 0;
 var audios = [];
 var firstTime = true;
 
+String.prototype.splice = function( idx, rem, s ) {
+    return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
+};
 
   
 function playAudio(i){
@@ -13,25 +17,37 @@ function playAudio(i){
 	if (i < audios.length){
 		console.log("playing");
 		
-		var delay ;
-		if (firstTime){
-			delay = 600;
-			firstTime = false;
-		}else{
-			delay = 0;
-		}
 		
-		var txt = kacrut.shift();
-		$(renderArea).append("<span id='element" + i + "'></span>");
-		$('#element' + i).typed({
-			strings: [txt],
-			typeSpeed: 10,
-			contentType: 'html',
-			showCursor: false,
-			startDelay: delay //ms,
-		});
+    var delay ;
+    if (firstTime){
+      delay = 2500;
+      firstTime = false;
+    }else{
+      delay = 0;
+    }
+    var txt = kacruthtml.shift();
+    $(renderArea).append("<span id='element" + i + "'></span>");
+    // $('#element' + i).typed({
+    //  strings: [txt],
+    //  typeSpeed: 10,
+    //  contentType: 'html',
+    //  showCursor: false,
+    //  startDelay: delay //ms,
+    // });
+
+    $('#element' + i).typer([txt],{
+            char: '',
+            delay: delay,
+            duration: 605,
+            typeSpeed: 10,
+            endless: false,
+            onType: $.noop,
+            afterAll: $.noop,
+            afterPhrase: $.noop
+        });
 		
 		audios[i].play();
+    
 	}else{
 		console.log("not playing");
 	}
@@ -264,37 +280,189 @@ function resumeAudio(){
       } while (txt.length > start);*/
 	  
 	  
-	  var delimiter = " ";
-		do{
-			var tempMax = maxSliceLength + 1;
-			if (txt.indexOf(".") > -1 && txt.indexOf(".") < tempMax){
-			
-				  kacrut.push(txt.substring(0, txt.indexOf(".")+1));
-				  slices.push(txt.substring(0, txt.indexOf(".")+1).trim());
-				  
-				  txt = txt.substring(txt.indexOf(".")+1, txt.length);
-			}else if (txt.indexOf(",") > -1 && txt.indexOf(",") < tempMax){
-			
-				  kacrut.push(txt.substring(0, txt.indexOf(",")+1));
-				  slices.push(txt.substring(0, txt.indexOf(",")+1).trim());
-				  
-				  txt = txt.substring(txt.indexOf(",")+1, txt.length);
-			}else{
-				  do {
-						tempMax--;
-						var c = txt.charAt(tempMax);
-				  }while(c != delimiter);
-				  
-				  slices.push(txt.substring(0, tempMax));
-				  kacrut.push(txt.substring(0, tempMax + 1));
-				  
-				  txt = txt.substring(tempMax+1, txt.length);
-			}
-			  
-		}while (txt.length > 100);
+  	 //  var delimiter = " ";
+  		// do{
+  		// 	var tempMax = maxSliceLength + 1;
+  		// 	if (txt.indexOf(".") > -1 && txt.indexOf(".") < tempMax){
+  			
+  		// 		  kacrut.push(txt.substring(0, txt.indexOf(".")+1));
+  		// 		  slices.push(txt.substring(0, txt.indexOf(".")+1).trim());
 
-	  kacrut.push(txt);
-	  slices.push(txt.trim());
+  				  
+  		// 		  txt = txt.substring(txt.indexOf(".")+1, txt.length);
+  		// 	}else if (txt.indexOf(",") > -1 && txt.indexOf(",") < tempMax){
+  			
+  		// 		  kacrut.push(txt.substring(0, txt.indexOf(",")+1));
+  		// 		  slices.push(txt.substring(0, txt.indexOf(",")+1).trim());
+  				  
+  		// 		  txt = txt.substring(txt.indexOf(",")+1, txt.length);
+  		// 	}else{
+  		// 		  do {
+  		// 				tempMax--;
+  		// 				var c = txt.charAt(tempMax);
+  		// 		  }while(c != delimiter);
+  				  
+  		// 		  slices.push(txt.substring(0, tempMax));
+  		// 		  kacrut.push(txt.substring(0, tempMax + 1));
+  				  
+  		// 		  txt = txt.substring(tempMax+1, txt.length);
+  		// 	}
+  			  
+  		// }while (txt.length > 100);
+
+  	 //  kacrut.push(txt);
+  	 //  slices.push(txt.trim());
+     debugger;
+
+      var startSlideIdx = 0;
+      var curTxt = txt;
+      var toKacrut = '';
+      var toSlice = '';
+      var toKacrut2 = '';
+      var tempCloseTag = '';
+      var tag = '';
+      var openTag = '';
+      var isMustToCloseTag = false;
+      var closeTagIsFounded = false;
+      var curChar = '';
+      for (var i = 0; i < txt.length; i++) {
+        curChar = txt.substr(i).charAt(0);
+        if((curChar != '\n') && (curChar != '\r'))
+        {
+          if (txt.substr(i).charAt(0) === '<') {
+            while (txt.substr(i).charAt(0) !== '>') {
+              tag += txt.substr(i).charAt(0);
+              i++;
+            }
+            i++;
+            tag += '>';
+            if(tag.substring(0, 2) == '</' ){
+              closeTagIsFounded = true;
+              isMustToCloseTag = false;
+              tempCloseTag = tag; 
+              i--;
+            }
+            else if(tag.substring(tag.length-2, tag.length) == '/>' ){
+              closeTagIsFounded = true;
+              isMustToCloseTag = false; 
+              i--;
+            }
+            else{
+              isMustToCloseTag = true;  
+            }
+            openTag = tag;
+          }
+          curChar = txt.substr(i).charAt(0);
+
+          if(tag != ''){
+            toKacrut2 += tag;
+            tag = '';
+          }
+
+          
+          if(!closeTagIsFounded){
+            toKacrut2 += txt.substr(i).charAt(0);
+            toKacrut += txt.substr(i).charAt(0);
+            toSlice += txt.substr(i).charAt(0);
+          }
+
+          
+
+          if(((toSlice.length + 1) >= maxSliceLength) || (i >= (txt.length - 1)) || closeTagIsFounded){
+            
+            if((toKacrut != '') && ((toSlice.length + 1) == maxSliceLength) && ((curChar != '.') || (curChar != ','))){
+              var decreaseIdx = toSlice.length-1;
+              var tmpChar = '';
+              var found = false;
+              while((decreaseIdx>0) && !found){
+                tmpChar = toSlice.substr(decreaseIdx).charAt(0);
+                if(tmpChar == '.'){
+                  found = true;
+                }
+                else{
+                  decreaseIdx--;
+                }
+                
+              }
+              if(!found){
+                decreaseIdx = toSlice.length-1;
+                while((decreaseIdx>0) && !found){
+                  tmpChar = toSlice.substr(decreaseIdx).charAt(0);
+                  if(tmpChar == ','){
+                    found = true;
+                  }
+                  else{
+                    decreaseIdx--;
+                  }
+                  
+                }
+              }
+              if(!found){
+                decreaseIdx = toSlice.length-1;
+                while((decreaseIdx>0) && !found){
+                  tmpChar = toSlice.substr(decreaseIdx).charAt(0);
+                  if(tmpChar == ' '){
+                    found = true;
+                  }
+                  else{
+                    decreaseIdx--;
+                  }
+                }
+              }
+              if(found){
+                var decreaseNum = (toSlice.length-1) - decreaseIdx;
+                var sliceLength = toSlice.length;
+                i -= decreaseNum;
+                toSlice = toSlice.substring(0, decreaseIdx+1);
+                toKacrut = toKacrut.substring(0, decreaseIdx+1);
+                if(closeTagIsFounded){
+                  toKacrut2 = toKacrut2.replace(tempCloseTag,'');
+                  toKacrut2 = toKacrut2.substring(0, decreaseIdx + 1 + (toKacrut2.length - sliceLength));
+                  toKacrut2 += tempCloseTag;
+                }else{
+                  toKacrut2 = toKacrut2.substring(0, decreaseIdx+1+ (toKacrut2.length - sliceLength));
+                }
+              }
+            }
+            if(closeTagIsFounded){
+              closeTagIsFounded = false;
+            }
+            if(toKacrut != '')
+              kacrut.push(toKacrut);
+            if(toSlice != '')
+              slices.push(toSlice.trim());
+            if(isMustToCloseTag){
+              var closeTag = '<'+'/'+openTag.substr(1);
+              
+              toKacrut2 += closeTag;
+              i++;
+              txt = txt.splice( i, 0, closeTag );
+              i += closeTag.length-1;
+              curChar = txt.substr(i).charAt(0);
+              i ++;
+              curChar = txt.substr(i).charAt(0);
+              txt = txt.splice( i, 0, openTag );
+              curChar = txt.substr(i).charAt(0);
+
+              openTag = '';
+              tag = '';
+              openTag = '';
+              isMustToCloseTag = false;
+              i--;
+
+            }
+            if(toKacrut == '')
+              kacruthtml[kacruthtml.length-1] += toKacrut2;
+            else
+              kacruthtml.push(toKacrut2);
+            toKacrut2 = '';
+            toKacrut = '';
+            toSlice = '';
+          }
+        }    
+      }
+      
+
       return slices;
     };
 
