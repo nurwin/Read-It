@@ -10,6 +10,7 @@ $(document).ready(function() {
 		eulaStr = $("#eula").html();
 		eulaArr = eulaStr.split(":break:");
 	});
+	
 	soundManager.setup({
         url: '/',
         preferFlash: false,
@@ -22,6 +23,8 @@ $(document).ready(function() {
 			  // play
 			  $("#btnPlay").click(function() {
 				googleTTS.play($("#eula").text(), "en", function(err) {
+				
+					debugger;
 				  if (err) {
 					$("#error").text(err.toString());
 				  }

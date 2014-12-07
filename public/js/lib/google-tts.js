@@ -1,4 +1,9 @@
 var kacrut = [];
+var queue = [];
+var isPlaying = false;
+var i = 0;
+
+var audios = [];
 
 /*! google-tts v1.0.0 | https://github.com/hiddentao/google-tts */
 (function (name, definition){
@@ -187,7 +192,8 @@ var kacrut = [];
 		var wCount = slice.split(" ").length;
 		
         urls.push(
-          'http://translate.google.com/translate_tts?ie=UTF-8&tl=' + lang + '&q=' + encodeURIComponent(slice)
+          //'http://translate.google.com/translate_tts?ie=UTF-8&tl=' + lang + '&q=' + encodeURIComponent(slice)
+          'homeStream/' + encodeURIComponent(slice)
         );
 		// + '&total=' + (slices.length )
       }
@@ -269,20 +275,24 @@ var kacrut = [];
           if (err) return cb(err);
           if (0 >= urls.length) return cb();
 
-		  
-		  //draw text
-		  var txt = kacrut.shift();
-		  debugger;
-			$(renderArea).append("<span id='element" + urls.length + "'></span>");
-			$('#element' + urls.length).typed({
-				strings: [txt],
-				typeSpeed: 0,
-				contentType: 'html',
-				showCursor: false,
-				startDelay: 500 //ms,
-			});
+				/*if (audios.length > 0){
+					var a = audios.shift();
+					a.play();
+				}*/
+			  //draw text
+			  console.log("get more");
+			  var txt = kacrut.shift();
+				$(renderArea).append("<span id='element" + urls.length + "'></span>");
+				$('#element' + urls.length).typed({
+					strings: [txt],
+					typeSpeed: 0,
+					contentType: 'html',
+					showCursor: false,
+					startDelay: 500 //ms,
+				});
 			
-          player.play(urls.shift(), _playFn);
+				player.play(urls.shift(), _playFn);
+			
         }).call();
       });
     };
@@ -324,8 +334,6 @@ var kacrut = [];
      */
     self.toString = function() { throw new Error('Not yet implemented'); };
   };
-
-
   /**
    * Playback using HTML5 Audio.
    * @constructor
@@ -385,14 +393,23 @@ var kacrut = [];
 
     self.play = function(url, cb) {
       // load the MP3
-      try {
+	  try {
         var audio = new Audio();
         audio.src = url;
-        audio.addEventListener('ended', function() {
-          cb();
-        });
-        audio.play();
 		
+        audio.addEventListener('ended', function() {
+			isPlaying = false;
+			console.log("req: "+url+" ENDED status="+isPlaying);
+        });
+        audio.addEventListener('canplay', function() {
+			isPlaying = true;
+			console.log("req: "+url+" canplay status="+isPlaying);
+			cb();
+        });
+		//console.log("asep: " + i);
+		//i++;
+        audio.play();
+		//audios.push(audio);
 		/*$("#frame").attr("src",url);
 		$("#frame").on("load", function(){
 			debugger;
