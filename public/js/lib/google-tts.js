@@ -5,6 +5,7 @@ var i = 0;
 
 var audios = [];
 var firstTime = true;
+var muted = "";
 
 
   
@@ -31,6 +32,7 @@ function playAudio(i){
 			startDelay: delay //ms,
 		});
 		
+		audios[i].muted = muted;
 		audios[i].play();
 	}else{
 		console.log("not playing");
@@ -40,12 +42,14 @@ function playAudio(i){
 function pauseAudio(){
 	debugger;
 	if (audios.length>0 && audios != undefined)
+		audios[i].muted = muted;
 		audios[i].pause();
 }
   
 function resumeAudio(){
 	debugger;
 	if (audios.length>0 && audios != undefined)
+		audios[i].muted = muted;
 		audios[i].resume();
 }
 

@@ -5,13 +5,17 @@ block content
 		.col-sm-8
 			#error
 		.col-sm-4(style='text-align: right;')
+			button#btnMute.btn.btn-primary(type="button", data-toggle="button") Mute
 			a#btnPlay.btn.btn-default(href='#', role='button', rel='noreferrer') Play
-			a#btnPause.btn.btn-default(href='#', role='button', rel='noreferrer') Pause
-			a#btnResume.btn.btn-default(href='#', role='button', rel='noreferrer') Resume
+			a#btnPause.btn.btn-default(href='#', role='button', rel='noreferrer', style="display:none") Pause
+			a#btnResume.btn.btn-default(href='#', role='button', rel='noreferrer', style="display:none") Resume
 	hr
 	.row
 		.col-sm-12(style='text-align:center;')
-			h3 Facebook's Statement of Rights and Responsibilities
+			p#lastUpdate
+	.row
+		.col-sm-12(style='text-align:center;')
+			h3#title
 			br
 	.row
 		.col-sm-1

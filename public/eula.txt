@@ -1,9 +1,0 @@
-<pages>
-	<page>
-		<text>
-			<p>This Statement of Rights and Responsibilities (Statement, Terms, or SRR) derives from the Facebook Principles, and is our terms of service that governs our relationship with users and others who interact with Facebook. By using or accessing Facebook, you agree to this Statement, as updated from time to time in accordance with Section 14 below. Additionally, you will find resources at the end of this document that help you understand how Facebook works.</p> <br/>
-			<h2>Privacy</h2>
-			Your privacy is very important to us. We designed our Data Use Policy to make important disclosures about how you can use Facebook to share with others and how we collect and can use your content and information. We encourage you to read the Data Use Policy, and to use it to help you make informed decisions.
-		</text>
-	</page>
-</pages>

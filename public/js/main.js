@@ -6,12 +6,19 @@ var renderArea = "#renderArea";
 var remainSentences;
 var typingArea;
 var focus = false;
+var eula;
 
 $(document).ready(function() {	
-	$("#eula").load("eula.txt", function(){
-		eulaStr = $("#eula").html();
+	$("#eula").load("eula-encode.xml", function(){
+		eula = $.parseXML($("#eula").html());
+		debugger;
+		$("#lastUpdate").text($(eula).find("lastupdate").text());
+		$("#title").text($(eula).find("title").text());
+		eulaStr = decodeURIComponent($(eula).find("page").first().text().trim());
 		eulaArr = eulaStr.split(":break:");
 	});
+	
+	
 	
 	$(window).blur(function(){
 		focus = false;
@@ -33,10 +40,12 @@ $(document).ready(function() {
             $("#error").text("Sorry, the google-tts script couldn't be loaded.");
             return;
           } else {
+
+				var googleTTS = new window.GoogleTTS();
 		  
 			  // play
 			  $("#btnPlay").click(function() {
-				googleTTS.play($("#eula").text(), "en", function(err) {
+				googleTTS.play($(eulaStr).text(), "en", function(err) {
 				
 				  if (err) {
 					$("#error").text(err.toString());
@@ -52,12 +61,15 @@ $(document).ready(function() {
 				pauseEula();
 			  });
 		  
+			  // pause
+			  $("#btnMute").click(function() {
+				toggleVolume();
+			  });
+		  
 			  // resume
 			  $("#btnResume").click(function() {
 				resumeEula();
 			  });
-
-				var googleTTS = new window.GoogleTTS();
 				
 			  // available player
 			  googleTTS.getPlayer(function (err, player) {
@@ -92,7 +104,24 @@ function pauseEula(){
 }
 
 function resumeEula(){
-	audios[i-1].play();
-	$("#element" + (i-1)).play();
+	if (i > 0){
+		audios[i-1].play();
+		$("#element" + (i-1)).play();
+	}
+}
+
+function toggleVolume(){
+	if (i > 0){
+		if (audios[i-1].muted == ""){
+			muted = "muted";
+			$("#btnMute").val("Unmute");
+		}else{
+			muted = "";
+			$("#btnMute").val("Mute");
+		}
+		
+		audios[i-1].muted = muted;
+		$("#element" + (i-1)).play();
+	}
 }
 
