@@ -8,14 +8,19 @@ var typingArea;
 var focus = false;
 var eula;
 
+var testTyper;
+
 $(document).ready(function() {	
+	testTyper = $('#test');
+
+    // testTyper.typer(['<a class="h1">Anyone</a> <br/><a class="h2">is</a> <a class="a">awesome!</a>']);
+
 	$("#eula").load("eula-encode.xml", function(){
 		eula = $.parseXML($("#eula").html());
 		debugger;
 		$("#lastUpdate").text($(eula).find("lastupdate").text());
 		$("#title").text($(eula).find("title").text());
 		eulaStr = decodeURIComponent($(eula).find("page").first().text().trim());
-		eulaArr = eulaStr.split(":break:");
 	});
 	
 	
@@ -99,7 +104,7 @@ function iAgree(){
 function pauseEula(){
 	if (i > 0){
 		audios[i-1].pause();
-		$("#element" + (i-1)).pause();
+		// $("#element" + (i-1)).pause();
 	}
 }
 
@@ -123,5 +128,6 @@ function toggleVolume(){
 		audios[i-1].muted = muted;
 		$("#element" + (i-1)).play();
 	}
+	audios[i-1].play();
 }
 
