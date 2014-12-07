@@ -130,6 +130,7 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
 
 app.get('/eula', eulaController.getEula);
 app.get('/eula/try/:qry', eulaController.tryEula);
+app.get('/eula/stream', eulaController.streamEula);
 
 /**
  * API examples routes.
