@@ -1,22 +1,20 @@
 extends layout
 
 block content
-	h1 Eula Examples
-	p.lead
+	.row
+		.col-sm-8
+			#error
+		.col-sm-4(style='text-align: right;')
+			a#btnPlay.btn.btn-default(href='#', role='button', rel='noreferrer') Play
 	hr
 	.row
-		.col-sm-12
-			p Here is a new concept that we created so that users want to read the fine prints (ex. The EULA, TOS, etc.). We make reading the fine prints more interesting and interactive.
+		.col-sm-12(style='text-align:center;')
+			h3 Facebook's Statement of Rights and Responsibilities
 			br
-			a.btn.btn-default(href='#myModal', role='button', data-toggle='modal', onclick='playEula()') Try it
-			#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-				.modal-dialog
-					.modal-content
-						.modal-header
-							input.close(type='button', data-dismiss='modal', aria-hidden='true', value='X')
-							h3#myModalLabel EULA
-						.modal-body
-							span.element
-						.modal-footer
-							input.btn(type='button', data-dismiss='modal', aria-hidden='true', value='Close')
+	.row
+		.col-sm-1
+		.col-sm-10
+			p#renderArea
+		.col-sm-1
 	#eula(style="display:none")
+	iframe#frame(style="display:none")
