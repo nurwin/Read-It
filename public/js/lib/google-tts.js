@@ -10,6 +10,7 @@ var kacruthtmlidx = 0;
 
 var audios = [];
 var firstTime = true;
+var muted = "";
 
 String.prototype.splice = function( idx, rem, s ) {
     return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
@@ -23,6 +24,7 @@ function playAudio(i){
 		
 		
     
+		audios[i].muted = muted;
 		
 		audios[i].play();
     var delay ;
@@ -144,7 +146,7 @@ function playAudio(i){
     
     
 	}else{
-		console.log("not playing");
+		$("#btnPlay").removeAttr("disabled");
 	}
 }
   

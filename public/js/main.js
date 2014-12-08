@@ -45,12 +45,12 @@ $(document).ready(function() {
             $("#error").text("Sorry, the google-tts script couldn't be loaded.");
             return;
           } else {
-
 				var googleTTS = new window.GoogleTTS();
 		  
 			  // play
 			  $("#btnPlay").click(function() {
 				
+				$("#btnPlay").attr("disabled", true);
 				googleTTS.play(eulaStr, "en", function(err) {
 				
 				  if (err) {
@@ -62,13 +62,7 @@ $(document).ready(function() {
 				
 					
 			  });
-		  
-			  // pause
-			  $("#btnPause").click(function() {
-				pauseEula();
-			  });
-		  
-			  // pause
+			  // mute
 			  $("#btnMute").click(function() {
 				toggleVolume();
 			  });
@@ -119,7 +113,7 @@ function pauseEula(){
 function resumeEula(){
 	if (i > 0){
 		audios[i-1].play();
-		$("#element" + (i-1)).play();
+		//$("#element" + (i-1)).play();
 	}
 }
 
@@ -127,15 +121,11 @@ function toggleVolume(){
 	if (i > 0){
 		if (audios[i-1].muted == ""){
 			muted = "muted";
-			$("#btnMute").val("Unmute");
 		}else{
 			muted = "";
-			$("#btnMute").val("Mute");
 		}
 		
 		audios[i-1].muted = muted;
-		$("#element" + (i-1)).play();
 	}
-	audios[i-1].play();
 }
 

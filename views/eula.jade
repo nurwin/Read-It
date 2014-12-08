@@ -18,6 +18,9 @@ block content
 		.row
 			.col-sm-13(style="overflow-y: show; height: 360px; width: 100%;")
 				.row
+					.col-sm-12(style='text-align:right;')
+						a(href="/") Skip this, and I agree
+				.row
 					.col-sm-12(style='text-align:center;')
 						h2#title
 						br
@@ -25,7 +28,8 @@ block content
 					.col-sm-1
 					.col-sm-10
 						div#renderArea 
-							
+						div#iAgreeArea
+							a.btn.btn-primary.btn-agree#btnAgree(href='/') I Agree
 					.col-sm-1
 				#eula(style="display:none")
 		.row
@@ -38,6 +42,14 @@ block content
 									span(aria-hidden="true") &times;
 									span.sr-only Close
 								h4.modal-title#myModalLabel Instructions
-							.modal-body Some instructions here...
+							.modal-body 
+								p Instructions:
+								ol
+									li "Play" to start reading the fine print.
+									li "Mute" to turn off and turn on the sound.
+									li "Agree" to agree with these rules after reading all the rules.
+									li "Skip" to agree without reading it first, and will take on any risk caused by not reading rules.
+
+								p If you understand, press the "I Understand".
 							.modal-footer
 								button.btn.btn-primary(data-dismiss="modal") I Understand

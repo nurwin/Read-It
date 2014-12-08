@@ -8,50 +8,46 @@
 	<pages>
 		<page>
 			<text>
-				<p>This Statement of Rights and Responsibilities (Statement, Terms, or SRR) derives from the Facebook Principles, and is our terms of service that governs our relationship with users and others who interact with Facebook. By using or accessing Facebook, you agree to this Statement, as updated from time to time in accordance with Section 14 below. Additionally, you will find resources at the end of this document that help you understand how Facebook works.</p><br/>
-				<h2>1. Privacy</h2>
-				<p>Your privacy is very important to us. We designed our <a href='#'>Data Use Policy</a> to make important disclosures about how you can use Facebook to share with others and how we collect and can use your content and information. We encourage you to read the Data Use Policy, and to use it to help you make informed decisions.</p>
-				<h2>2. Sharing Your Content and Information</h2>
-				<p>You own all of the content and information you post on Facebook, and you can control how it is shared through your privacy and application settings. In addition:</p><br/>
-				<p>1. For content that is covered by intellectual property rights, like photos and videos (IP content), you specifically give us the following permission, subject to your privacy and application settings: you grant us a non-exclusive, transferable, sub-licensable, royalty-free, worldwide license to use any IP content that you post on or in connection with Facebook (IP License). This IP License ends when you delete your IP content or your account unless your content has been shared with others, and they have not deleted it.<br/>
-				2. When you delete IP content, it is deleted in a manner similar to emptying the recycle bin on a computer. However, you understand that removed content may persist in backup copies for a reasonable period of time (but will not be available to others).<br/>
-				3. When you use an application, the application may ask for your permission to access your content and information as well as content and information that others have shared with you.  We require applications to respect your privacy, and your agreement with that application will control how the application can use, store, and transfer that content and information.  (To learn more about Platform, including how you can control what information other people may share with applications, read our Data Use Policy and Platform Page.)<br/>
-				4. When you publish content or information using the Public setting, it means that you are allowing everyone, including people off of Facebook, to access and use that information, and to associate it with you (i.e., your name and profile picture).<br/>
-				5. We always appreciate your feedback or other suggestions about Facebook, but you understand that we may use them without any obligation to compensate you for them (just as you have no obligation to offer them).<br/></p>
-			</text>
-		</page>
-		<page>
-			<text>
-				<h2>3. Safety</h2>
-				<p>We do our best to keep Facebook safe, but we cannot guarantee it. We need your help to keep Facebook safe, which includes the following commitments by you:</p><br/>
-				<p>1. You will not post unauthorized commercial communications (such as spam) on Facebook.<br/>
-				2. You will not collect users' content or information, or otherwise access Facebook, using automated means (such as harvesting bots, robots, spiders, or scrapers) without our prior permission.<br/>
-				3. You will not engage in unlawful multi-level marketing, such as a pyramid scheme, on Facebook.<br/>
-				4. You will not upload viruses or other malicious code.<br/>
-				5. You will not solicit login information or access an account belonging to someone else.<br/>
-				6. You will not bully, intimidate, or harass any user.<br/>
-				7. You will not post content that: is hate speech, threatening, or pornographic; incites violence; or contains nudity or graphic or gratuitous violence.<br/>
-				8. You will not develop or operate a third-party application containing alcohol-related, dating or other mature content (including advertisements) without appropriate age-based restrictions.<br/>
-				9. You will follow our Promotions Guidelines and all applicable laws if you publicize or offer any contest, giveaway, or sweepstakes (“promotion”) on Facebook.<br/>
-				10. You will not use Facebook to do anything unlawful, misleading, malicious, or discriminatory.<br/>
-				11. You will not do anything that could disable, overburden, or impair the proper working or appearance of Facebook, such as a denial of service attack or interference with page rendering or other Facebook functionality.<br/>
-				You will not facilitate or encourage any violations of this Statement or our policies.</p><br/>
-			</text>
-		</page>
-		<page>
-			<text>
-				<h2>4. Registration and Account Securit</h2>
-				<p>Facebook users provide their real names and information, and we need your help to keep it that way. Here are some commitments you make to us relating to registering and maintaining the security of your account:</p><br/>
-				<p>1. You will not provide any false personal information on Facebook, or create an account for anyone other than yourself without permission.<br/>
-				2. You will not create more than one personal account.<br/>
-				3. If we disable your account, you will not create another one without our permission.<br/>
-				4. You will not use your personal timeline primarily for your own commercial gain, and will use a Facebook Page for such purposes.<br/>
-				5. You will not use Facebook if you are under 13.<br/>
-				6. You will not use Facebook if you are a convicted sex offender.<br/>
-				7. You will keep your contact information accurate and up-to-date.<br/>
-				8. You will not share your password (or in the case of developers, your secret key), let anyone else access your account, or do anything else that might jeopardize the security of your account.<br/>
-				9. You will not transfer your account (including any Page or application you administer) to anyone without first getting our written permission.<br/>
-				10. If you select a username or similar identifier for your account or Page, we reserve the right to remove or reclaim it if we believe it is appropriate (such as when a trademark owner complains about a username that does not closely relate to a user's actual name).</p><br />
+				<span>This Statement of Rights and Responsibilities (Statement, Terms, or SRR) derives from the Facebook Principles, and is our terms of service that governs our relationship with users and others who interact with Facebook. By using or accessing Facebook, you agree to this Statement, as updated from time to time in accordance with Section 14 below. Additionally, you will find resources at the end of this document that help you understand how Facebook works.</span>
+				<span class="title">1. Privacy</span>
+				<span>Your privacy is very important to us. We designed our <a href='#'>Data Use Policy</a> to make important disclosures about how you can use Facebook to share with others and how we collect and can use your content and information. We encourage you to read the Data Use Policy, and to use it to help you make informed decisions.</span><br/>
+				<span class="title">2. Sharing Your Content and Information</span><br/>
+				<span>You own all of the content and information you post on Facebook, and you can control how it is shared through your privacy and application settings. In addition:</span><br/>
+				<ol>
+					<li>For content that is covered by intellectual property rights, like photos and videos (IP content), you specifically give us the following permission, subject to your privacy and application settings: you grant us a non-exclusive, transferable, sub-licensable, royalty-free, worldwide license to use any IP content that you post on or in connection with Facebook (IP License). This IP License ends when you delete your IP content or your account unless your content has been shared with others, and they have not deleted it.</li><br/>
+					<li>When you delete IP content, it is deleted in a manner similar to emptying the recycle bin on a computer. However, you understand that removed content may persist in backup copies for a reasonable period of time (but will not be available to others).</li><br/>
+					<li>When you use an application, the application may ask for your permission to access your content and information as well as content and information that others have shared with you.  We require applications to respect your privacy, and your agreement with that application will control how the application can use, store, and transfer that content and information.  (To learn more about Platform, including how you can control what information other people may share with applications, read our Data Use Policy and Platform Page.)</li><br/>
+					<li>When you publish content or information using the Public setting, it means that you are allowing everyone, including people off of Facebook, to access and use that information, and to associate it with you (i.e., your name and profile picture).</li><br/>
+					<li>We always appreciate your feedback or other suggestions about Facebook, but you understand that we may use them without any obligation to compensate you for them (just as you have no obligation to offer them).</li><br/>
+				</ol>
+				<span class="title">3. Safety</span><br/>
+				<span>We do our best to keep Facebook safe, but we cannot guarantee it. We need your help to keep Facebook safe, which includes the following commitments by you:</span><br/>
+				<ol>
+					<li>You will not post unauthorized commercial communications (such as spam) on Facebook.</li><br/>
+					<li>You will not collect users' content or information, or otherwise access Facebook, using automated means (such as harvesting bots, robots, spiders, or scrapers) without our prior permission.</li><br/>
+					<li>You will not engage in unlawful multi-level marketing, such as a pyramid scheme, on Facebook.</li><br/>
+					<li>You will not upload viruses or other malicious code.</li><br/>
+					<li>You will not solicit login information or access an account belonging to someone else.</li><br/>
+					<li>You will not bully, intimidate, or harass any user.</li><br/>
+					<li>You will not post content that: is hate speech, threatening, or pornographic; incites violence; or contains nudity or graphic or gratuitous violence.</li><br/>
+					<li>You will not develop or operate a third-party application containing alcohol-related, dating or other mature content (including advertisements) without appropriate age-based restrictions.</li><br/>
+					<li>You will follow our Promotions Guidelines and all applicable laws if you publicize or offer any contest, giveaway, or sweepstakes (“promotion”) on Facebook.</li><br/>
+					<li>You will not use Facebook to do anything unlawful, misleading, malicious, or discriminatory</li><br/>
+					<li>You will not do anything that could disable, overburden, or impair the proper working or appearance of Facebook, such as a denial of service attack or interference with page rendering or other Facebook functionality.</li><br/>
+					<li>You will not facilitate or encourage any violations of this Statement or our policies.</li></ol><br/>
+				<span class="title">4. Registration and Account Securit</span>
+				<span>Facebook users provide their real names and information, and we need your help to keep it that way. Here are some commitments you make to us relating to registering and maintaining the security of your account:</span><br/>
+				<ol>
+					<li>You will not provide any false personal information on Facebook, or create an account for anyone other than yourself without permission.</li><br/>
+					<li>You will not create more than one personal account.</li><br/>
+					<li>If we disable your account, you will not create another one without our permission.</li><br/>
+					<li>You will not use your personal timeline primarily for your own commercial gain, and will use a Facebook Page for such purposes.</li><br/>
+					<li>You will not use Facebook if you are under 13.</li><br/>
+					<li>You will not use Facebook if you are a convicted sex offender.</li><br/>
+					<li>You will keep your contact information accurate and up-to-date.</li><br/>
+					<li>You will not share your password (or in the case of developers, your secret key), let anyone else access your account, or do anything else that might jeopardize the security of your account.</li><br/>
+					<li>You will not transfer your account (including any Page or application you administer) to anyone without first getting our written permission.</li><br/>
+					<li>If you select a username or similar identifier for your account or Page, we reserve the right to remove or reclaim it if we believe it is appropriate (such as when a trademark owner complains about a username that does not closely relate to a user's actual name).</li></ol><br />
 			</text>
 		</page>
 	</pages>
