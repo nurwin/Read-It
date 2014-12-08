@@ -1,12 +1,15 @@
 var kacrut = [];
 var kacruthtml = [];
 var queue = [];
+var renderqueue = [];
 var isPlaying = false;
 var i = 0;
+var renderIdx = 0;
+var kacruthtmllgt = 0;
+var kacruthtmlidx = 0;
 
 var audios = [];
 var firstTime = true;
-var muted = "";
 
 String.prototype.splice = function( idx, rem, s ) {
     return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
@@ -19,36 +22,126 @@ function playAudio(i){
 		console.log("playing");
 		
 		
+    
+		
+		audios[i].play();
     var delay ;
     if (firstTime){
-      delay = 500;
+      delay = 0;
       firstTime = false;
     }else{
       delay = 0;
     }
-    var txt = kacruthtml.shift();
-    $(renderArea).append("<span id='element" + i + "'></span>");
-    // $('#element' + i).typed({
-    //  strings: [txt],
-    //  typeSpeed: 10,
-    //  contentType: 'html',
-    //  showCursor: false,
-    //  startDelay: delay //ms,
-    // });
-
-    $('#element' + i).typer([txt],{
-            char: '',
-            delay: delay,
-            duration: 605,
-            typeSpeed: 10,
-            endless: false,
-            onType: $.noop,
-            afterAll: $.noop,
-            afterPhrase: $.noop
-        });
-		
-		audios[i].muted = muted;
-		audios[i].play();
+    var kacrut1 = ''; 
+    var kacrut2 = '';
+    var print = '';
+    var isNotOnRenderArea = false;
+    var currRenderArea = $(renderArea);
+    
+    debugger;
+    // renderqueue.shift();
+    kacrut1 = kacrut.shift();
+    kacrut1 = kacrut1.trim();
+    kacrut2 = kacruthtml.shift();
+    kacrut2 = kacrut2.trim();
+    kacruthtmlidx++;
+    while(kacrut2.length!=kacrut1.length){
+      var close = '';
+      var lastItem = undefined;
+      if(kacrut2.substring(kacrut2.length-2, kacrut2.length) == '/>' ){
+        print+= kacrut2;
+      }
+      else{
+        if(renderqueue.length >0){
+          if(kacrut2.substring(0,2) == '</'){
+            var strIdx = Math.max(0,(renderqueue.length/2)-1);
+            lastItem = renderqueue[strIdx];
+            close = '<'+'/'+lastItem.substring(1, lastItem.indexOf(' ') == -1 ? lastItem.length - 1 : lastItem.indexOf(' ')) + '>';
+            if(kacrut2 == close){
+              idx = renderqueue.length-1;
+              do{
+                renderqueue.pop();
+                idx--;
+              }while(idx>=strIdx)
+              lastItem = renderqueue[idx];
+              if(lastItem){
+                debugger;
+                currRenderArea = $("#"+lastItem.substring((lastItem.indexOf("id")+4),(lastItem.indexOf(">")-1)-lastItem.indexOf("id")+4));
+              }else{
+                currRenderArea = $(renderArea);
+              }
+            }
+            else{
+              var strIdx = Math.max(0,(renderqueue.length/2));
+              idx = renderqueue.length-1;
+              do{
+                renderqueue.pop();
+                idx--;
+              }while(idx>=strIdx)
+              lastItem = renderqueue[idx];
+              if(lastItem){
+                debugger;
+                currRenderArea = $("#"+lastItem.substring((lastItem.indexOf("id")+4),(lastItem.indexOf(">")-1)-lastItem.indexOf("id")+4));
+              }else{
+                currRenderArea = $(renderArea);
+              }
+            }
+            
+          }
+          else if(kacrut2.substring(0,1) == '<'){
+            var parentId = "item"+kacruthtmlidx;
+            lastItem = renderqueue[(renderqueue.length/2)-1];
+            var parent = renderqueue[((renderqueue.length/2)-1)-1];
+            if(parent!=undefined){
+              debugger;
+              currRenderArea = $("#"+parent.substring((parent.indexOf("id")+4),(parent.indexOf(">")-1)-parent.indexOf("id")+4)).parent();
+              currRenderArea.splice( ((renderqueue.length/2)-1)+2, 0, " id='item"+kacruthtmlidx+"'" );
+              print += renderqueue[((renderqueue.length/2)-1)+2];
+            }
+            else{  
+              debugger;
+              kacrut2 = kacrut2.splice( kacrut2.length-1, 0, " id='item"+kacruthtmlidx+"'" );
+              renderqueue.push(kacrut2);
+              print += renderqueue[renderqueue.length-1];
+            }
+          }
+        }
+        else{
+          debugger;
+          kacrut2 = kacrut2.splice( kacrut2.length-1, 0, " id='item"+kacruthtmlidx+"'" );
+          renderqueue.push(kacrut2); 
+          print += renderqueue[renderqueue.length-1];       
+        }
+      }      
+      kacrut2 = kacruthtml.shift();
+      kacrut2 = kacrut2.trim()
+      kacruthtmlidx++;
+    };
+    var renderIdx = kacruthtmlidx - 1;
+    for(var idx = renderqueue.length-1; idx >=0 ; idx--){
+      debugger;
+      var close = '<'+'/'+renderqueue[idx].substring(1,renderqueue[idx].indexOf(" ")) + '>';
+      close = close.replace(" id='item"+(renderIdx)+"'", "");
+      renderqueue.push(close);
+      if(renderIdx == kacruthtmlidx-1)
+        print += close;
+      renderIdx--;
+    }
+    
+    currRenderArea.append(print);
+    debugger;
+    $('#item'+(kacruthtmlidx-1)).typer([kacrut2],{
+              char: '',
+              delay: delay,
+              duration: 605,
+              typeSpeed: 10,
+              endless: false,
+              onType: $.noop,
+              afterAll: $.noop,
+              afterPhrase: $.noop
+          });
+   
+    
     
 	}else{
 		console.log("not playing");
@@ -56,16 +149,14 @@ function playAudio(i){
 }
   
 function pauseAudio(){
-	debugger;
+	// debugger;
 	if (audios.length>0 && audios != undefined)
-		audios[i].muted = muted;
 		audios[i].pause();
 }
   
 function resumeAudio(){
-	debugger;
+	// debugger;
 	if (audios.length>0 && audios != undefined)
-		audios[i].muted = muted;
 		audios[i].resume();
 }
 
@@ -316,64 +407,233 @@ function resumeAudio(){
 
   	 //  kacrut.push(txt);
   	 //  slices.push(txt.trim());
-     debugger;
+     
+
+      // var startSlideIdx = 0;
+      // var curTxt = txt;
+      // var toKacrut = '';
+      // var toSlice = '';
+      // var toKacrut2 = '';
+      // var tempCloseTag = '';
+      // var tag = '';
+      // var openTag = '';
+      // var isMustToCloseTag = false;
+      // var closeTagIsFounded = false;
+      // var curChar = '';
+      // var tagqueue = [];
+      // for (var i = 0; i < txt.length; i++) {
+      //   curChar = txt.substr(i).charAt(0);
+      //   if((curChar != '\n') && (curChar != '\r'))
+      //   {
+      //     if (txt.substr(i).charAt(0) === '<') {
+      //       while (txt.substr(i).charAt(0) !== '>') {
+      //         tag += txt.substr(i).charAt(0);
+      //         i++;
+      //       }
+      //       i++;
+      //       tag += '>';
+      //       if(tag.substring(0, 2) == '</' ){
+      //         closeTagIsFounded = true;
+      //         isMustToCloseTag = false;
+      //         tempCloseTag = tag; 
+      //         i--;
+      //       }
+      //       else if(tag.substring(tag.length-2, tag.length) == '/>' ){
+      //         closeTagIsFounded = true;
+      //         isMustToCloseTag = false; 
+      //         i--;
+      //       }
+      //       else{
+      //         isMustToCloseTag = true;  
+      //         openTag = tag; 
+      //       }
+      //     }
+      //     curChar = txt.substr(i).charAt(0);
+
+      //     if(tag != ''){
+      //       toKacrut2 += tag;
+      //       tag = '';
+      //     }
+
+          
+      //     if(!closeTagIsFounded && ((curChar != '\n') && (curChar != '\r'))){
+      //       toKacrut2 += txt.substr(i).charAt(0);
+      //       toKacrut += txt.substr(i).charAt(0);
+      //       toSlice += txt.substr(i).charAt(0);
+      //     }
+
+          
+
+      //     if(((toSlice.length + 1) >= maxSliceLength) || (i >= (txt.length - 1)) || closeTagIsFounded || (curChar == '.') || (curChar == ',')){
+            
+      //       if((toKacrut != '') && ((toSlice.length + 1) == maxSliceLength) && ((curChar != '.') || (curChar != ','))){
+      //         var decreaseIdx = toSlice.length-1;
+      //         var tmpChar = '';
+      //         var found = false;
+      //         while((decreaseIdx>0) && !found){
+      //           tmpChar = toSlice.substr(decreaseIdx).charAt(0);
+      //           if(tmpChar == '.'){
+      //             found = true;
+      //           }
+      //           else{
+      //             decreaseIdx--;
+      //           }
+                
+      //         }
+      //         if(!found){
+      //           decreaseIdx = toSlice.length-1;
+      //           while((decreaseIdx>0) && !found){
+      //             tmpChar = toSlice.substr(decreaseIdx).charAt(0);
+      //             if(tmpChar == ','){
+      //               found = true;
+      //             }
+      //             else{
+      //               decreaseIdx--;
+      //             }
+                  
+      //           }
+      //         }
+      //         if(!found){
+      //           decreaseIdx = toSlice.length-1;
+      //           while((decreaseIdx>0) && !found){
+      //             tmpChar = toSlice.substr(decreaseIdx).charAt(0);
+      //             if(tmpChar == ' '){
+      //               found = true;
+      //             }
+      //             else{
+      //               decreaseIdx--;
+      //             }
+      //           }
+      //         }
+      //         if(found){
+      //           var decreaseNum = (toSlice.length-1) - decreaseIdx;
+      //           var sliceLength = toSlice.length;
+      //           i -= decreaseNum;
+      //           toSlice = toSlice.substring(0, decreaseIdx+1);
+      //           toKacrut = toKacrut.substring(0, decreaseIdx+1);
+      //           if(closeTagIsFounded){
+      //             toKacrut2 = toKacrut2.replace(tempCloseTag,'');
+      //             toKacrut2 = toKacrut2.substring(0, decreaseIdx + 1 + (toKacrut2.length - sliceLength));
+      //             toKacrut2 += tempCloseTag;
+      //           }else{
+      //             toKacrut2 = toKacrut2.substring(0, decreaseIdx+1+ (toKacrut2.length - sliceLength));
+      //           }
+      //         }
+      //       }
+      //       if(closeTagIsFounded){
+      //         closeTagIsFounded = false;
+      //       }
+      //       if(toKacrut != '')
+      //         kacrut.push(toKacrut);
+      //       if(toSlice != '')
+      //         slices.push(toSlice.trim());
+      //       if(isMustToCloseTag){
+      //         var closeTag = '<'+'/'+openTag.substr(1);
+              
+      //         toKacrut2 += closeTag;
+      //         i++;
+      //         txt = txt.splice( i, 0, closeTag );
+      //         i += closeTag.length-1;
+      //         curChar = txt.substr(i).charAt(0);
+      //         i ++;
+      //         curChar = txt.substr(i).charAt(0);
+      //         txt = txt.splice( i, 0, openTag );
+      //         curChar = txt.substr(i).charAt(0);
+
+      //         openTag = '';
+      //         tag = '';
+      //         openTag = '';
+      //         isMustToCloseTag = false;
+      //         i--;
+
+      //       }
+      //       if(toKacrut == '')
+      //         kacruthtml[kacruthtml.length-1] += toKacrut2;
+      //       else
+      //         kacruthtml.push(toKacrut2);
+      //       toKacrut2 = '';
+      //       toKacrut = '';
+      //       toSlice = '';
+      //     }
+      //   }    
+      // }
 
       var startSlideIdx = 0;
       var curTxt = txt;
       var toKacrut = '';
       var toSlice = '';
       var toKacrut2 = '';
-      var tempCloseTag = '';
       var tag = '';
-      var openTag = '';
-      var isMustToCloseTag = false;
-      var closeTagIsFounded = false;
+      var prevtag = '';
+      var isSingleTag = false;
       var curChar = '';
-      for (var i = 0; i < txt.length; i++) {
+      var tagqueue = [];
+      var closeTagIsFounded = false;
+      
+      var i = 0;
+      // debugger;
+      for (i = 0; i < txt.length; i++) {
         curChar = txt.substr(i).charAt(0);
         if((curChar != '\n') && (curChar != '\r'))
         {
           if (txt.substr(i).charAt(0) === '<') {
+            // debugger;
             while (txt.substr(i).charAt(0) !== '>') {
               tag += txt.substr(i).charAt(0);
               i++;
             }
-            i++;
             tag += '>';
+            // debugger;
             if(tag.substring(0, 2) == '</' ){
+              // debugger;
               closeTagIsFounded = true;
-              isMustToCloseTag = false;
-              tempCloseTag = tag; 
-              i--;
             }
             else if(tag.substring(tag.length-2, tag.length) == '/>' ){
-              closeTagIsFounded = true;
-              isMustToCloseTag = false; 
-              i--;
+              isSingleTag = true;
             }
-            else{
-              isMustToCloseTag = true;  
-            }
-            openTag = tag;
+            tagqueue.push(tag);
           }
-          curChar = txt.substr(i).charAt(0);
-
+        }
+        curChar = txt.substr(i).charAt(0);
+        if((curChar != '\n') && (curChar != '\r'))
+        {
+          // debugger;
           if(tag != ''){
+            if(toKacrut2.trim()==''){
+              toKacrut2 = '';
+            }
+            else if(toKacrut2!=''){
+              kacruthtml.push(toKacrut2);
+              toKacrut2 = '';
+            }
             toKacrut2 += tag;
             tag = '';
           }
-
-          
-          if(!closeTagIsFounded){
-            toKacrut2 += txt.substr(i).charAt(0);
+          else{
+            if(toKacrut2.trim()==tagqueue[tagqueue.length-1]){
+              kacruthtml.push(toKacrut2);
+              toKacrut2 = '';
+            }
             toKacrut += txt.substr(i).charAt(0);
             toSlice += txt.substr(i).charAt(0);
+            toKacrut2 += txt.substr(i).charAt(0);
           }
 
-          
-
-          if(((toSlice.length + 1) >= maxSliceLength) || (i >= (txt.length - 1)) || closeTagIsFounded){
-            
+          if(isSingleTag)
+          {
+            if(kacruthtml.length > 0){
+              kacruthtml.push(toKacrut2);
+              toKacrut2 = '';
+            }
+            isSingleTag = false;
+            tagqueue.pop(tag);
+          }
+          else if(((toSlice.length + 1) >= maxSliceLength) || (i >= (txt.length - 1)) || closeTagIsFounded){
+            // debugger;
+            var mustToClostTag = false;
+            if ((((toSlice.length + 1) >= maxSliceLength) || (i >= (txt.length - 1))) && (!closeTagIsFounded)){
+              mustToClostTag = true;
+            }
             if((toKacrut != '') && ((toSlice.length + 1) == maxSliceLength) && ((curChar != '.') || (curChar != ','))){
               var decreaseIdx = toSlice.length-1;
               var tmpChar = '';
@@ -414,59 +674,73 @@ function resumeAudio(){
                 }
               }
               if(found){
+                // debugger;
                 var decreaseNum = (toSlice.length-1) - decreaseIdx;
                 var sliceLength = toSlice.length;
                 i -= decreaseNum;
+                curChar = txt.substr(i).charAt(0);
                 toSlice = toSlice.substring(0, decreaseIdx+1);
                 toKacrut = toKacrut.substring(0, decreaseIdx+1);
                 if(closeTagIsFounded){
-                  toKacrut2 = toKacrut2.replace(tempCloseTag,'');
-                  toKacrut2 = toKacrut2.substring(0, decreaseIdx + 1 + (toKacrut2.length - sliceLength));
-                  toKacrut2 += tempCloseTag;
+                  toKacrut2 = toKacrut2.replace(tagqueue[tagqueue.length-1],'');
+                  toKacrut2 = toKacrut2.substring(0, toKacrut2.length - decreaseNum );
+                  toKacrut2 += tagqueue[tagqueue.length-1];
                 }else{
-                  toKacrut2 = toKacrut2.substring(0, decreaseIdx+1+ (toKacrut2.length - sliceLength));
+                  // debugger;
+                  toKacrut2 = toKacrut2.substring(0, toKacrut2.length - decreaseNum);
                 }
               }
             }
-            if(closeTagIsFounded){
-              closeTagIsFounded = false;
-            }
-            if(toKacrut != '')
-              kacrut.push(toKacrut);
-            if(toSlice != '')
-              slices.push(toSlice.trim());
-            if(isMustToCloseTag){
-              var closeTag = '<'+'/'+openTag.substr(1);
+            //
+            // debugger;
+            var tmpCloseTag = '';
               
-              toKacrut2 += closeTag;
+            if(mustToClostTag){
+              // debugger;
+              tmpCloseTag = '<'+'/'+tagqueue[tagqueue.length-1].substring(1, tagqueue[tagqueue.length-1].indexOf(' ')) + '>';
+              
+              // toKacrut2 += tmpCloseTag;
               i++;
-              txt = txt.splice( i, 0, closeTag );
-              i += closeTag.length-1;
+              txt = txt.splice( i, 0, tmpCloseTag );
+              i += tmpCloseTag.length-1;
               curChar = txt.substr(i).charAt(0);
               i ++;
               curChar = txt.substr(i).charAt(0);
-              txt = txt.splice( i, 0, openTag );
+              txt = txt.splice( i, 0, tagqueue[tagqueue.length-1] );
               curChar = txt.substr(i).charAt(0);
-
-              openTag = '';
-              tag = '';
-              openTag = '';
-              isMustToCloseTag = false;
+              mustToClostTag = false;
+              tagqueue.pop(tag);
               i--;
-
             }
-            if(toKacrut == '')
-              kacruthtml[kacruthtml.length-1] += toKacrut2;
-            else
+
+            if(closeTagIsFounded){
+              if(toSlice.trim()!=''){
+                kacrut.push(toKacrut);
+                slices.push(toSlice.trim());  
+              }
               kacruthtml.push(toKacrut2);
+
+              closeTagIsFounded = false;
+              tagqueue.pop(tag);
+              tagqueue.pop(tag);
+            }else{
+              kacrut.push(toKacrut);
+              slices.push(toSlice.trim());
+              kacruthtml.push(toKacrut2);
+              if(tmpCloseTag!=''){
+                kacruthtml.push(tmpCloseTag);
+              }
+            }              
             toKacrut2 = '';
             toKacrut = '';
             toSlice = '';
+            tmpCloseTag ='';
           }
-        }    
-      }
-      
 
+        }
+      }
+      kacruthtmllgt = kacruthtml.length;
+      debugger;
       return slices;
     };
 
@@ -619,7 +893,7 @@ function resumeAudio(){
         //audio.play();
 		audios.push(audio);
 		
-		debugger;
+		// debugger;
 		if (i==0){
 			playAudio(i);
 			i++;
