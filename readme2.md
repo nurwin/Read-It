@@ -16,10 +16,7 @@ We have a new concept to solve this problem. If everyone is too lazy to read the
 Screenshots
 -----------
 
-Here provide couple screenshots of your project. You can use a tool like https://monosnap.com/welcome or https://droplr.com to take a screenshot. Animated gifs are also welcome.
-
-![Koding](https://koding.com/a/site.landing/images/slideshow/2x/ss-terminal.png "Koding")
-![Koding](https://koding.com/a/site.landing/images/slideshow/2x/ss-ide.png "Koding")
+![HearIt](/images/ss1.png?raw=true "HearIt")
 
 APIs used
 ---------
