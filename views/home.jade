@@ -1,28 +1,73 @@
 extends layout
 
 block content
-  span.element
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
-  hr
-  .row
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+	span.element
+		.row
+			.col-sm-12
+				.jumbotron(style="height: 450px; background-image: url('images/lazy_lion.jpg');background-size: cover;")
+					.container(style="padding-top: 50px;")
+						table.text-white.shadow(style="width: 100%")
+							tr
+								td(style="vertical-align: top")
+									h1(style="font-weight: bold;margin-top:0px;margin-bottom:1px;") HearIt
+									p One doesn't simply, read the fine print...
+									a.btn.btn-success.btn-lg.btn-demo(href="/eula", role="button") View Demo
+								td(style="vertical-align: top; text-align: right; padding-right: 20px;")
+									p(style="font-size: 53px;line-height: initial;") If everyone is too lazy<br/>to read the fine print,<br/>let them to
+									p(style="font-size: 72px;font-weight: bold;") HEAR IT!
+		.row
+			.col-sm-12
+				.container
+					h2 One doesn't simply, read the fine print...
+					p In the current era, there is no more people who want to read the fine print (ie TOS, EULA, legal documents). That's because the content of the fine print is too long, it makes people feel lazy to read it. In fact, the average length of the content of the fine print of the 10 major websites today is around ~4K words. 
+					p We have a new concept to solve this problem. If everyone is too lazy to read the fine print, then let them <strong>hear it</strong>!
+					br
+					h2 Here is the number of words in site's term of service:
+					br
+		row
+			.col-sm-12
+				.container
+					row
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #2e4da7; font-size: 38px;") <br/>4.477
+							h3 Facebook
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #006699; font-size: 38px;") <br/>7.294
+							h3 LinkedIn
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #cb2026; font-size: 38px;") <br/>2.219
+							h3 Pinterest
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #1f64ad; font-size: 38px;") <br/>5.486
+							h3 Myspace
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #fe8400; font-size: 38px;") <br/>7.961
+							h3 Soundcloud
+				.container
+					row
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #e43b38; font-size: 38px;") <br/>1.691
+							h3 Google
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #959595; font-size: 38px;") <br/>5.773
+							h3 Wikipedia
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #00acec; font-size: 38px;") <br/>3.486
+							h3 Twitter
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #ef3536; font-size: 38px;") <br/>3.764
+							h3 Youtube
+						.col-sm-2(style="text-align:center;margin:5px;")
+							span.img-circle.img-responsive.img-center.text-white(style="height: 165px; width: 200px; vertical-align: middle;background-color: #0062dd; font-size: 38px;") <br/>5.763
+							h3 Flickr
+				.container
+					row
+						.col-sm-12
+					row
+						.col-sm-12
+					p.text-muted Source: Georgia Institute of Technology
+		.row
+			.col-sm-12(style="height: 25px;")
+				
+				
+					

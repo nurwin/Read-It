@@ -1,34 +1,43 @@
 extends layout
 
 block content
-	.row
-		.col-sm-8
-			#error
-		.col-sm-4(style='text-align: right;')
-			button#btnMute.btn.btn-primary(type="button", data-toggle="button") Mute
-			a#btnPlay.btn.btn-default(href='#', role='button', rel='noreferrer') Play
-			a#btnPause.btn.btn-default(href='#', role='button', rel='noreferrer', style="display:none") Pause
-			a#btnResume.btn.btn-default(href='#', role='button', rel='noreferrer', style="display:none") Resume
-	hr
-	.row
-		.col-sm-13(style="overflow-y: show; height: 360px; width: 100%;")
-			.row
-				.col-sm-1
-				.col-sm-11(style='text-align:left;')
-					p#lastUpdate.text-muted Date of Last Revision: November 15, 2013.
-			.row
-				.col-sm-12(style='text-align:center;')
-					h2#title Statement of Rights and Responsibilities
-					br
-			.row
-				.col-sm-1
-				.col-sm-10
-					div#renderArea 
-						
-				.col-sm-1
-			#eula(style="display:none")
-			br
-			br
-			br
-			br
-			#test
+	.container(style="padding-top: 75px;")
+		include partials/flash
+		.row
+			.col-sm-8
+				#error
+		.row
+			.col-sm-6(style='text-align: left;')
+				p#lastUpdate.text-muted
+			.col-sm-6(style='text-align: right;')
+				button#btnMute.btn.btn-primary(type="button", data-toggle="button") Mute
+				a#btnPlay.btn.btn-default(href='#', role='button', rel='noreferrer') Play
+				a#btnPause.btn.btn-default(href='#', role='button', rel='noreferrer', style="display:none") Pause
+				a#btnResume.btn.btn-default(href='#', role='button', rel='noreferrer', style="display:none") Resume
+		hr
+		.row
+			.col-sm-13(style="overflow-y: show; height: 360px; width: 100%;")
+				.row
+					.col-sm-12(style='text-align:center;')
+						h2#title
+						br
+				.row
+					.col-sm-1
+					.col-sm-10
+						div#renderArea 
+							
+					.col-sm-1
+				#eula(style="display:none")
+		.row
+			.col-sm-13
+				.modal.fade#myModal(role="dialog", tab-index="-1", aria-labelledby="myModalLabel", aria-hidden="true")
+					.modal-dialog
+						.modal-content
+							.modal-header
+								button.close(data-dismiss="modal")
+									span(aria-hidden="true") &times;
+									span.sr-only Close
+								h4.modal-title#myModalLabel Instructions
+							.modal-body Some instructions here...
+							.modal-footer
+								button.btn.btn-primary(data-dismiss="modal") I Understand
