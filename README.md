@@ -1,5 +1,5 @@
 <h2>HearIt</h2>
-*One doesn't simply, read the fine print...*
+*One doesn't simply, read the fine print...* (<a href="https://www.youtube.com/watch?v=MZe_zPeAHJA" target="_blank">View video</a>)
 
 Description
 -----------
